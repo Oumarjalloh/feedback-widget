@@ -2,6 +2,7 @@ import { auth, signOut } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { CreateProjectForm } from "./create-project-form";
 import { DeleteProjectButton } from "./delete-project-button";
+import Link from "next/link";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -71,10 +72,18 @@ export default async function DashboardPage() {
                       {new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(project.createdAt)}
                     </p>
                   </div>
-                  <DeleteProjectButton
-                    projectId={project.id}
-                    projectName={project.name}
-                  />
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <Link
+                      href={`/dashboard/${project.id}`}
+                      className="text-sm font-medium text-black hover:underline"
+                    >
+                      View →
+                    </Link>
+                    <DeleteProjectButton
+                      projectId={project.id}
+                      projectName={project.name}
+                    />
+                  </div>
                 </div>
               </article>
             ))
